@@ -8,4 +8,5 @@ import (
 type App struct {
 	Database *gorm.DB
 	S3 *s3.S3
+	Config Config
 }

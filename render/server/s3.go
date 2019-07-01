@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
-func (a *App) SetS3(){
+func (a *App) BuildS3(){
 	region := "us-east-1"
 	chainErrors := true
 	sess, err := session.NewSession(&aws.Config{
