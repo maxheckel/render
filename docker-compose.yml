@@ -1,0 +1,31 @@
+version: "2"
+
+services:
+  db:
+    image: postgres:9.6
+    ports:
+      - 54321:5432
+    volumes:
+      - ./local/data:/var/lib/postgres
+    environment:
+      POSTGRES_DB: render
+      POSTGRES_USER: render
+      POSTGRES_PASSWORD: secret
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    env_file:
+      - ./.env
+    volumes:
+      - .:/Users/maxheckel/Go/src/github.com/maxheckel/render
+    working_dir: /Users/maxheckel/Go/src/github.com/maxheckel/render
+    command: |-
+      bash -c '
+      set -ex; go get -u github.com/codegangsta/gin; gin \
+              -i \
+              -d server \
+              --appPort 8081 \
+              run server/main.go'
+    ports:
+      - 8081:8081
